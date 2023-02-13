@@ -1,4 +1,7 @@
 # WhatIsThatImage
+
+This application is a discussion board made to help answers people question about unknow images. Users can post an image that they have a question about, whether that be the artist, origin, location or anything and people will help you figure it out.
+
 Storyboard 
 
 ![Web 1920 – 1](https://user-images.githubusercontent.com/64508170/218367658-25ebdb91-a626-4af8-b69c-4f283a71c880.png)
@@ -24,3 +27,8 @@ https://whatisthatimage.atlassian.net/jira/software/projects/WITIS/boards/1/back
 temporary photos if access is denied to scrum board:
 ![image](https://user-images.githubusercontent.com/77586024/218347679-4c0d5d64-793d-4788-9b5c-60e7fa734b44.png)
 
+Scrum Roles:
+Jakob Brown: scrum master
+Cole Pownell: UI
+tyler Mccall:  logic and persistance
+Zach Stenger: UI
