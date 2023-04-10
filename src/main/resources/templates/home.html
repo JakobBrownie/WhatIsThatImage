@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1"/>
 <title>What is that Image home page</title>
 </head>
 <body>
+<!-- <div th:replace="templates :: layout">...</div> -->
+<div th:replace="fragments/layout :: header"></div>
 home page
+
+<form action="#" th:action="@{/login}">
+<button name="submit" type="submit" value="0">log in</button>
+</form>
+
+<form action="#" th:action="@{/signup}">
+<button name="submit" type="submit" value="0">sign up</button>
+</form>
+<form action="#" th:action="@{/post}">
+<button name="submit" type="submit" value="0">view post</button>
+</form>
+<form action="#" th:action="@{/newpost}">
+<button name="submit" type="submit" value="0">new post</button>
+</form>
+<form action="#" th:action="@{/profile}">
+<button name="submit" type="submit" value="0">profile</button>
+</form>
+<form action="#" th:action="@{/search}">
+<button name="submit" type="submit" value="0">view search results</button>
+</form>
 </body>
 </html>
