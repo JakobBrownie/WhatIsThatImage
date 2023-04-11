@@ -1,6 +1,6 @@
 package com.imagesearch.imagesearch.dto;
 
-public class userDTO {
+public class UserDTO {
 	
 	private int userId;
 	private String userName;

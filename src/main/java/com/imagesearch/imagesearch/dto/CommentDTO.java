@@ -1,6 +1,6 @@
 package com.imagesearch.imagesearch.dto;
 
-public class commentDTO {
+public class CommentDTO {
 	
 	private int commentId;
 	private int userId;

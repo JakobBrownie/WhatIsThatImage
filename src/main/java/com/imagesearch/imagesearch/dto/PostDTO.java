@@ -1,11 +1,14 @@
 package com.imagesearch.imagesearch.dto;
 
-public class postDTO {
+import java.time.LocalDate;
+
+public class PostDTO {
 	
 	private int postId;
 	private String postName;
 	private String postContent;
-	private userDTO user;
+	private UserDTO user;
+	private LocalDate date;
 	
 	public int getpostId() {
 		return postId;
@@ -26,11 +29,20 @@ public class postDTO {
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
-	public userDTO getTestName() {
+	public UserDTO getTestName() {
 		return user;
 	}
-	public void setUser(userDTO user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+	
+	public LocalDate getDate()
+	{
+		return date;
+	}
+	public void setDate(LocalDate date)
+	{
+		this.date = date;
 	}
 
 }
