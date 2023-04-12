@@ -1,7 +1,15 @@
 package com.imagesearch.imagesearch.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class CommentDTO {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int commentId;
 	private int userId;
 	private int postId;
