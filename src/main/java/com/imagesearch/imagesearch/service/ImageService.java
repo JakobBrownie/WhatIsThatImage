@@ -3,16 +3,35 @@ package com.imagesearch.imagesearch.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+import com.imagesearch.imagesearch.dao.IUserDAO;
 import com.imagesearch.imagesearch.dto.PostDTO;
 import com.imagesearch.imagesearch.dto.UserDTO;
 
 @Component
-public class PostServiceStub implements IPostService {
+public class ImageService implements IImageService {
 	
+	@Autowired
+	IUserDAO userDAO;
+	
+	public boolean save(UserDTO userDTO) throws Exception
+	{
+		userDAO.save(userDTO);
+		return false;
+	}
+	
+	@Override
+	public UserDTO fetchUserById(int id)
+	{
+		UserDTO user = new UserDTO();
+		user.setUserId(123);
+		user.setUserName("test user name");
+		return(user);
+	}
 	
 	@Override
 	public PostDTO fetchById(int id)

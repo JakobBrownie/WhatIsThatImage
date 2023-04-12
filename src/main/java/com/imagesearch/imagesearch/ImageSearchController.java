@@ -5,14 +5,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.imagesearch.imagesearch.dto.UserDTO;
 
-import com.imagesearch.imagesearch.service.IPostService;
+import com.imagesearch.imagesearch.service.IImageService;
 
 @Controller
 public class ImageSearchController {
 	
 	@Autowired
-	private IPostService postServiceStub;
+	private IImageService postServiceStub;
 
 	
 	@RequestMapping("/home")
@@ -24,7 +25,15 @@ public class ImageSearchController {
 	@RequestMapping(value="/login")
 	public String login()
 	{
-		
+		UserDTO user = new UserDTO();
+		user = postServiceStub.fetchUserById(10);
+		try {
+			postServiceStub.save(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
 		return "login";
 	}
 	@RequestMapping(value="/signup")
