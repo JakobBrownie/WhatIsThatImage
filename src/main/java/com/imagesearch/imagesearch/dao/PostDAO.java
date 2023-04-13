@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.imagesearch.imagesearch.dto.PostDTO;
+import com.imagesearch.imagesearch.dto.UserDTO;
 
 @Component
 public class PostDAO implements IPostDAO {
@@ -16,6 +17,12 @@ public class PostDAO implements IPostDAO {
 	{
 		postRepository.save(user);
 		return user;
+	}
+	
+	@Override
+	public Iterable<PostDTO> fetchAll() throws Exception
+	{
+		return postRepository.findAll();
 	}
 	
 }

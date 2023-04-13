@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+import com.imagesearch.imagesearch.dao.ICommentDAO;
+import com.imagesearch.imagesearch.dao.IPostDAO;
 import com.imagesearch.imagesearch.dao.IUserDAO;
+import com.imagesearch.imagesearch.dto.CommentDTO;
 import com.imagesearch.imagesearch.dto.PostDTO;
 import com.imagesearch.imagesearch.dto.UserDTO;
 
@@ -17,6 +20,12 @@ public class ImageService implements IImageService {
 	
 	@Autowired
 	IUserDAO userDAO;
+	
+	@Autowired
+	IPostDAO postDAO;
+	
+	@Autowired
+	ICommentDAO commentDAO;
 	
 	public boolean save(UserDTO userDTO) throws Exception
 	{
@@ -31,6 +40,22 @@ public class ImageService implements IImageService {
 		user.setUserId(124);
 		user.setUserName("test user name test");
 		return(user);
+	}
+	
+	@Override
+	public Iterable<UserDTO> fetchAllUsers() throws Exception
+	{
+		return userDAO.fetchAll();
+	}
+	
+	public Iterable<PostDTO> fetchAllPosts() throws Exception
+	{
+		return postDAO.fetchAll();
+	}
+	
+	public Iterable<CommentDTO> fetchAllComments() throws Exception
+	{
+		return commentDAO.fetchAll();
 	}
 	
 	@Override

@@ -27,7 +27,9 @@ public class ImageSearchController {
 	{
 		UserDTO user = new UserDTO();
 		user = imageService.fetchUserById(10);
+		
 		try {
+			Iterable<UserDTO> test = imageService.fetchAllUsers();
 			imageService.save(user);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

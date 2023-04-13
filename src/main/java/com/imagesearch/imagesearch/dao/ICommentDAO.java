@@ -6,4 +6,6 @@ public interface ICommentDAO {
 
 	CommentDTO save(CommentDTO user);
 
+	Iterable<CommentDTO> fetchAll() throws Exception;
+
 }

@@ -6,4 +6,6 @@ public interface IUserDAO {
 
 	UserDTO save(UserDTO user);
 
+	Iterable<UserDTO> fetchAll() throws Exception;
+
 }

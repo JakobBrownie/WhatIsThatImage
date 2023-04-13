@@ -6,4 +6,6 @@ public interface IPostDAO {
 
 	PostDTO save(PostDTO user);
 
+	Iterable<PostDTO> fetchAll() throws Exception;
+
 }

@@ -18,4 +18,10 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 	
+	@Override
+	public Iterable<UserDTO> fetchAll() throws Exception
+	{
+		return userRepository.findAll();
+	}
+	
 }

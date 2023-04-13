@@ -15,4 +15,6 @@ public interface IImageService {
 	
 	boolean save(UserDTO userDTO) throws Exception;
 
+	Iterable<UserDTO> fetchAllUsers() throws Exception;
+
 }
