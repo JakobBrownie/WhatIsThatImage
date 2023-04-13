@@ -28,8 +28,8 @@ public class ImageService implements IImageService {
 	public UserDTO fetchUserById(int id)
 	{
 		UserDTO user = new UserDTO();
-		user.setUserId(123);
-		user.setUserName("test user name");
+		user.setUserId(124);
+		user.setUserName("test user name test");
 		return(user);
 	}
 	
@@ -44,7 +44,7 @@ public class ImageService implements IImageService {
 		post.setPostName("Test name");
 		post.setPostContent("link to image");
 		post.setDate(LocalDate.now());
-		post.setUser(user);
+		post.setUserId(1);
 		return(post);
 	}
 	
@@ -60,7 +60,7 @@ public class ImageService implements IImageService {
 		post.setPostName("Test name");
 		post.setPostContent("link to image");
 		post.setDate(LocalDate.now());
-		post.setUser(user);
+		post.setUserId(1);
 		postList.add(post);
 		postList.add(post);
 		return(postList);

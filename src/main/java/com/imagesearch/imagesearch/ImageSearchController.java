@@ -13,7 +13,7 @@ import com.imagesearch.imagesearch.service.IImageService;
 public class ImageSearchController {
 	
 	@Autowired
-	private IImageService postServiceStub;
+	private IImageService imageService;
 
 	
 	@RequestMapping("/home")
@@ -26,13 +26,13 @@ public class ImageSearchController {
 	public String login()
 	{
 		UserDTO user = new UserDTO();
-		user = postServiceStub.fetchUserById(10);
+		user = imageService.fetchUserById(10);
 		try {
-			postServiceStub.save(user);
+			imageService.save(user);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "error";
+			
 		}
 		return "login";
 	}
