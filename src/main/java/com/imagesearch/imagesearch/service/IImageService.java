@@ -30,4 +30,6 @@ public interface IImageService {
 
 	List<PostDTO> getPostByUserId(int userId) throws Exception;
 
+	boolean savePost(PostDTO postDTO) throws Exception;
+
 }

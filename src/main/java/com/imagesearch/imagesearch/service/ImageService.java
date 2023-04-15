@@ -32,6 +32,12 @@ public class ImageService implements IImageService {
 		userDAO.save(userDTO);
 		return false;
 	}
+	@Override
+	public boolean savePost(PostDTO postDTO) throws Exception
+	{
+		postDAO.save(postDTO);
+		return false;
+	}
 	
 	@Override
 	public UserDTO fetchUserById(int id)

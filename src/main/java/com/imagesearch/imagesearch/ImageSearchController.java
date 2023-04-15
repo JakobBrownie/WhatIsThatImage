@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +49,7 @@ public class ImageSearchController {
 		return "home";
 	}
 	
+	//nav checks if user is logged in/otherwise goes to login
 	@RequestMapping(value="/login")
 	public String login()
 	{
@@ -61,12 +64,31 @@ public class ImageSearchController {
 		}
 		return returnString;
 	}
+	//initial sign up page nav
 	@RequestMapping(value="/signup")
 	public String signup()
 	{
 		
 		return "signup";
 	}
+	//after clicking sign up nav
+	@RequestMapping(value="/aftersignup")
+	public String aftersignup(@RequestParam(value ="username", required = true) String username, @RequestParam(value ="password", required = true) String password)
+	{
+		String returnString = "signup";
+		UserDTO user = new UserDTO();
+		user.setUserName(username);
+		user.setPassword(password);
+		try {
+			imageService.save(user);
+			returnString = "login";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return returnString;
+	}
+	//after clicking login nav
 	@RequestMapping(value="/afterLogin")
 	public String afterLogin(@RequestParam(value ="username", required = true) String username, @RequestParam(value ="password", required = true) String password)
 	{
@@ -94,6 +116,7 @@ public class ImageSearchController {
 		}
 		return returnString;
 	}
+	// post nav to show any given post
 	@RequestMapping(value="/post")
 	public ModelAndView post(@RequestParam("post_Id") int postId)
 	{
@@ -117,10 +140,40 @@ public class ImageSearchController {
 		return modelAndView;
 	}
 	@RequestMapping(value="/newpost")
-	public String newpost(HttpSession session)
+	public String newpost()
 	{
-	   Object test = session.getAttribute("login");
-		return "newpost";
+		String returnString = "login";
+	   if(islogin == true)
+	   {
+		   returnString = "newpost";
+	   }
+		return returnString;
+	}
+	
+	@RequestMapping(value="/afternewpost")
+	public String afternewpost(@RequestParam(value ="postname", required = true) String postname, @RequestParam(value ="imagelink", required = true) String imagelink)
+	{
+	   PostDTO post = new PostDTO();
+	   post.setPostName(postname);
+	   post.setPostContent(imagelink);
+	   post.setDate(LocalDate.now());
+	   post.setUserId(loginUserId);
+	   
+	   UserDTO user = new UserDTO();
+		try {
+			user = imageService.getUserById(loginUserId).get(0);		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		}
+		post.setUserName(user.getUserName());
+	   try {
+		imageService.savePost(post);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}	  
+		return "redirect:/profile?user_Id=" + loginUserId;
 	}
 	
 	//if not current user profile
@@ -154,10 +207,10 @@ public class ImageSearchController {
 	
 	@RequestMapping(value="/userprofile")
 	public String userprofile()
-	{
-			
+	{			
 		return "redirect:/profile?user_Id=" + loginUserId;
 	}
+	//displays top results from search
 	@RequestMapping(value="/search")
 	public ModelAndView search(@RequestParam(value ="searchTerm", required = false, defaultValue="") String searchTerm)
 	{
