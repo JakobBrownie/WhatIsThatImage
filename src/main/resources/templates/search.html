@@ -12,7 +12,7 @@ search results page
 <br/>
 <div class="list-group" th:each="post : ${posts}">
 	<a th:href="@{/post(post_Id=${post.getPostId})}" class="list-group-item list-group-item-action">
-		<p th:text="${post}"/>
+		<p th:text="${post.getPostName}"/>
 	</a>
 </div>
 

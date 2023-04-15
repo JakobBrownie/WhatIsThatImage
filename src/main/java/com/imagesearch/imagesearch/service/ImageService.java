@@ -68,6 +68,12 @@ public class ImageService implements IImageService {
 	}
 	
 	@Override
+	public List<CommentDTO> getAllCommentsByPostId(int id) throws Exception
+	{
+		return commentDAO.getAllCommentsByPostId(id);
+	}
+	
+	@Override
 	public PostDTO fetchById(int id)
 	{
 		UserDTO user = new UserDTO();

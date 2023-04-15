@@ -69,16 +69,21 @@ public class ImageSearchController {
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		List<PostDTO> posts = new ArrayList<PostDTO>();
+		List<CommentDTO> comments = new ArrayList<CommentDTO>();
 		try {
 			posts = imageService.getPostById(postId);
+			comments = imageService.getAllCommentsByPostId(postId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			modelAndView.setViewName("error");
 		}
-		PostDTO post = posts.get(1);
+		PostDTO post = posts.get(0);
+		
 		modelAndView.setViewName("post");
 		modelAndView.addObject("post", post);
+		modelAndView.addObject("comments", comments);
+		
 		return modelAndView;
 	}
 	@RequestMapping(value="/newpost")
@@ -110,7 +115,7 @@ public class ImageSearchController {
 		List<PostDTO> resultPosts = new ArrayList<PostDTO>();
 		for(PostDTO post: posts)
 		{
-			if( post.getpostName().contains(searchTerm))
+			if( post.getPostName().contains(searchTerm))
 			{
 				resultPosts.add(post);
 			}

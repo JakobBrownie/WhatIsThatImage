@@ -25,6 +25,9 @@ public class PostDTO {
 	private int userId;
 	@Column(name="date")
 	private LocalDate date;
+
+	@Column(name = "user_Name")
+	private String userName;
 	
 	public int getPostId() {
 		return postId;
@@ -32,7 +35,7 @@ public class PostDTO {
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}
-	public String getpostName() {
+	public String getPostName() {
 		return postName;
 	}
 	public void setPostName(String postName) {
@@ -59,6 +62,12 @@ public class PostDTO {
 	public void setDate(LocalDate date)
 	{
 		this.date = date;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

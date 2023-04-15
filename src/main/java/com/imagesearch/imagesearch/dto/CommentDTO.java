@@ -19,8 +19,11 @@ public class CommentDTO {
 	private int userId;
 	@Column(name="post_id")
 	private int postId;
+
 	@Column(name="content")
 	private String content;
+	@Column(name="user_Name")
+	private String userName;
 	
 	
 	public int getCommentId() {
@@ -46,6 +49,12 @@ public class CommentDTO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

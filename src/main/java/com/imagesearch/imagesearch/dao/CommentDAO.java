@@ -1,5 +1,7 @@
 package com.imagesearch.imagesearch.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +25,11 @@ public class CommentDAO implements ICommentDAO {
 	public Iterable<CommentDTO> fetchAll() throws Exception
 	{
 		return commentRepository.findAll();
+	}
+	
+	@Override
+	public List<CommentDTO> getAllCommentsByPostId(int id) throws Exception
+	{
+		return commentRepository.findByPostId(id);
 	}
 }
