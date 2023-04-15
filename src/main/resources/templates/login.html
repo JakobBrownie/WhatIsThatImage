@@ -10,7 +10,6 @@
 <div th:replace="fragments/layout :: header"></div>
 login
 
-<P th:unless="${fail == true}">user name or password incorrect</P>
   <form class="form-inline" action="#" th:action="@{/afterLogin}" method="GET">
 	    <input class="form-control mr-sm-2" placeholder="username" aria-label="Search" name="username">	
 	    <input class="form-control mr-sm-2" placeholder="password" aria-label="Search" name="password">

@@ -26,4 +26,6 @@ public interface IImageService {
 
 	boolean savePost(PostDTO postDTO) throws Exception;
 
+	boolean saveComment(CommentDTO commentDTO) throws Exception;
+
 }

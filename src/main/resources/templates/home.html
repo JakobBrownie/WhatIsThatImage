@@ -11,24 +11,10 @@
 <div th:replace="fragments/layout :: header"></div>
 home page
 
-<form action="#" th:action="@{/login}">
-<button name="submit" type="submit" value="0">log in</button>
-</form>
-
-<form action="#" th:action="@{/signup}">
-<button name="submit" type="submit" value="0">sign up</button>
-</form>
-<form action="#" th:action="@{/post}">
-<button name="submit" type="submit" value="0">view post</button>
-</form>
-<form action="#" th:action="@{/newpost}">
-<button name="submit" type="submit" value="0">new post</button>
-</form>
-<form action="#" th:action="@{/userprofile}">
-<button name="submit" type="submit" value="0">profile</button>
-</form>
-<form action="#" th:action="@{/search}">
-<button name="submit" type="submit" value="0">view search results</button>
-</form>
+<div class="list-group" th:each="post : ${posts}">
+	<a th:href="@{/post(post_Id=${post.getPostId})}" class="list-group-item list-group-item-action">
+		<p th:text="${post.getPostName}"/>
+	</a>
+</div>
 </body>
 </html>

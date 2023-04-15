@@ -38,15 +38,31 @@ public class ImageSearchController {
 	private int loginUserId = 0;
 	//default nav
 	@RequestMapping("/home")
-	public String home()
+	public ModelAndView home()
 	{
-		
-		return "home";
+		ModelAndView modelAndView = new ModelAndView();
+		List<PostDTO> posts = new ArrayList<PostDTO>();
+		List<PostDTO> topposts = new ArrayList<PostDTO>();
+		try {
+		posts= 
+				StreamSupport.stream(imageService.fetchAllPosts().spliterator(), false)
+				.collect(Collectors.toList());
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		for (int i = 0; i < 10 ; i++) {
+			 topposts.add(posts.get(i));
+			}
+		modelAndView.setViewName("home");
+		modelAndView.addObject("posts", topposts);
+		return modelAndView;
 	}
 	//backup navigation
 	@RequestMapping("/")
 	public String index() {
 		return "home";
+	
 	}
 	
 	//nav checks if user is logged in/otherwise goes to login
@@ -120,6 +136,7 @@ public class ImageSearchController {
 	@RequestMapping(value="/post")
 	public ModelAndView post(@RequestParam("post_Id") int postId)
 	{
+		CommentDTO commentDTO = new CommentDTO();
 		ModelAndView modelAndView = new ModelAndView();
 		List<PostDTO> posts = new ArrayList<PostDTO>();
 		List<CommentDTO> comments = new ArrayList<CommentDTO>();
@@ -137,6 +154,7 @@ public class ImageSearchController {
 		modelAndView.setViewName("post");
 		modelAndView.addObject("post", post);
 		modelAndView.addObject("comments", comments);
+		modelAndView.addObject("commentDTO", commentDTO);
 		
 		return modelAndView;
 	}
@@ -242,6 +260,38 @@ public class ImageSearchController {
 		modelAndView.setViewName("search");
 		modelAndView.addObject("posts", resultPosts);
 		return modelAndView;
+	}
+	// @RequestParam(value ="comment", required = false, defaultValue="") String content
+	@RequestMapping(value="/comment")
+	public String postComment(@RequestParam(value ="postId", required = true) int postId, @RequestParam(value ="content", required = true) String content)
+	{			
+		
+		if(islogin == false)
+		{
+			return "/login";
+		}
+		CommentDTO comment = new CommentDTO();
+		comment.setContent(content);
+		comment.setPostId(postId);
+		comment.setUserId(loginUserId);
+		List<UserDTO> users = new ArrayList<UserDTO>();
+		
+		UserDTO user = new UserDTO();
+		try {
+			users = imageService.getUserById(loginUserId);		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		}
+		user = users.get(0);
+		comment.setUserName(user.getUserName());	
+		try {
+			imageService.saveComment(comment);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/post?post_Id=" + postId;
 	}
 
 }

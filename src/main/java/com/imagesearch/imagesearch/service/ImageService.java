@@ -41,6 +41,13 @@ public class ImageService implements IImageService {
 		return false;
 	}
 	
+	@Override
+	public boolean saveComment(CommentDTO commentDTO) throws Exception
+	{
+		commentDAO.save(commentDTO);
+		return false;
+	}
+	
 	//gets all users
 	@Override
 	public Iterable<UserDTO> fetchAllUsers() throws Exception
