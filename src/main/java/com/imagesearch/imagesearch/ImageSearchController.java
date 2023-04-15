@@ -1,6 +1,7 @@
 package com.imagesearch.imagesearch;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +24,16 @@ import com.imagesearch.imagesearch.dto.UserDTO;
 
 import com.imagesearch.imagesearch.service.IImageService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ImageSearchController {
 	
 	@Autowired
 	private IImageService imageService;
 
+	private Boolean islogin = false;
+	private int loginUserId = 0;
 	
 	@RequestMapping("/home")
 	public String home()
@@ -43,17 +48,26 @@ public class ImageSearchController {
 	}
 	
 	@RequestMapping(value="/login")
-	public String login(Boolean login)
+	public String login()
 	{
-		String returnString = "";
-		if(login = true)
+		String returnString = "home";
+		if(islogin = true)
 		{
-			profile(1);
+			returnString = "redirect:/profile?user_Id=" + loginUserId;
+		} else
+		{
+			returnString = "login";
 		}
-		return "login";
+		return returnString;
 	}
 	@RequestMapping(value="/signup")
 	public String signup()
+	{
+		
+		return "signup";
+	}
+	@RequestMapping(value="/signup")
+	public String afterLogin()
 	{
 		
 		return "signup";
@@ -81,9 +95,9 @@ public class ImageSearchController {
 		return modelAndView;
 	}
 	@RequestMapping(value="/newpost")
-	public String newpost()
+	public String newpost(HttpSession session)
 	{
-		
+	   Object test = session.getAttribute("login");
 		return "newpost";
 	}
 	@RequestMapping(value="/profile")

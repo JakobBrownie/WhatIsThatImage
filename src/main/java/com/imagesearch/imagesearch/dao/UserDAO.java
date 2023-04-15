@@ -30,7 +30,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<UserDTO> getUserById(int id) throws Exception
 	{
-		return userRepository.findUserById(id);
+		return userRepository.findUserByUserId(id);
 	}
 	
 }
