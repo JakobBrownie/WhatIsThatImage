@@ -1,38 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta name="referrer" content="no-referrer">
-<meta charset="ISO-8859-1">
-<title>Post page</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
+  <meta charset="ISO-8859-1">
+  <title>Post page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
+
 <body>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<div th:replace="fragments/layout :: header"></div>
-view post page
-<p th:text="${post.getUserName}"/>
-<br/>
-<img th:src="${post.getPostContent}" alt="post image" referrerpolicy="no-referrer">
-<br/>
-<p th:text="${post.getDate}"/>
-<p th:text="${post.getPostId}"/>
-<br/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <div th:replace="fragments/layout :: header"></div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">View Post</h5>
+          </div>
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title" th:text="${post.getUserName}"></h3>
+              </div>
+              <div class="card-body">
+                <img class="card-img-top" th:src="${post.getPostContent}" alt="Post image">
+                <hr>
+                <p class="card-text" th:text="${post.getDate}"></p>
+              </div>
+            </div>
+            <br>
+            <div class="card">
+              <div class="card-header">
+                <h4>Leave a Comment:</h4>
+              </div>
+              <div class="card-body">
+                <form class="form-inline" action="#" th:action="@{/comment}" method="GET">
+                  <input name ="postId" th:value="${post.getPostId}" style="display:none" >  
+     				<input class="form-control mr-sm-2" placeholder="Enter Comment Here" aria-label="Search" name="content"> 
+                  <button type="submit" class="btn btn-primary">Post comment</button>
+                </form>
+              </div>
+            </div>
+            <br>
+            <div class="card">
+              <div class="card-header">
+                <h4>Comments:</h4>
+              </div>
+              <div class="card-body">              
+                 <div class="list-group" th:each="comment : ${comments}">
+					<a  class="list-group-item list-group-item-action">
+						<p th:text="${comment.getUserName}"/>
+						<p th:text="${comment.getContent}"/>
+					</a>
+				 </div>              
+              </div>
+            </div>
+          </div>
 
-<form class="form-inline" action="#" th:action="@{/comment}" method="GET">
-	 <input name ="postId" th:value="${post.getPostId}" >  
-     <input class="form-control mr-sm-2" placeholder="Enter Comment Here" aria-label="Search" name="content">              
-     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Comment</button>          
-
-</form>
-
-<br/>
-
-<div class="list-group" th:each="comment : ${comments}">
-	<a  class="list-group-item list-group-item-action">
-		<p th:text="${comment.getUserName}"/>
-		<p th:text="${comment.getContent}"/>
-	</a>
-</div>
+        </div>
+      </div>
+      </div>
+    </div>
 </body>
+
 </html>
