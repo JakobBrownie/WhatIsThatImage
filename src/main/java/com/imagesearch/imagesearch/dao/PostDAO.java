@@ -2,6 +2,7 @@ package com.imagesearch.imagesearch.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 import com.imagesearch.imagesearch.dto.PostDTO;
 import com.imagesearch.imagesearch.dto.UserDTO;
@@ -25,4 +26,10 @@ public class PostDAO implements IPostDAO {
 		return postRepository.findAll();
 	}
 	
+	
+	@Override
+	public List<PostDTO> getPostById(int id) throws Exception
+	{
+		return postRepository.findByPostId(id);
+	}
 }

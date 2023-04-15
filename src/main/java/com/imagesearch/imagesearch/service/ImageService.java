@@ -48,14 +48,23 @@ public class ImageService implements IImageService {
 		return userDAO.fetchAll();
 	}
 	
+	@Override
 	public Iterable<PostDTO> fetchAllPosts() throws Exception
 	{
 		return postDAO.fetchAll();
 	}
 	
+	@Override
 	public Iterable<CommentDTO> fetchAllComments() throws Exception
 	{
 		return commentDAO.fetchAll();
+	}
+	
+	
+	@Override
+	public List<PostDTO> getPostById(int id) throws Exception
+	{
+		return postDAO.getPostById(id);
 	}
 	
 	@Override

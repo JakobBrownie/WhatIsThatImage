@@ -3,8 +3,22 @@ package com.imagesearch.imagesearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import com.imagesearch.imagesearch.dto.UserDTO;
+import com.imagesearch.imagesearch.dao.ICommentDAO;
+import com.imagesearch.imagesearch.dao.IPostDAO;
+import com.imagesearch.imagesearch.dao.IUserDAO;
+import com.imagesearch.imagesearch.dto.CommentDTO;
+import com.imagesearch.imagesearch.dto.PostDTO;
 import com.imagesearch.imagesearch.dto.UserDTO;
 
 import com.imagesearch.imagesearch.service.IImageService;
@@ -22,8 +36,14 @@ public class ImageSearchController {
 		
 		return "home";
 	}
+	
+	@RequestMapping("/")
+	public String index() {
+		return "home";
+	}
+	
 	@RequestMapping(value="/login")
-	public String login()
+	public String login(Model model)
 	{
 		UserDTO user = new UserDTO();
 		user = imageService.fetchUserById(10);
@@ -45,10 +65,21 @@ public class ImageSearchController {
 		return "signup";
 	}
 	@RequestMapping(value="/post")
-	public String post()
+	public ModelAndView post(@RequestParam("post_Id") int postId)
 	{
-		
-		return "post";
+		ModelAndView modelAndView = new ModelAndView();
+		List<PostDTO> posts = new ArrayList<PostDTO>();
+		try {
+			posts = imageService.getPostById(postId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			modelAndView.setViewName("error");
+		}
+		PostDTO post = posts.get(1);
+		modelAndView.setViewName("post");
+		modelAndView.addObject("post", post);
+		return modelAndView;
 	}
 	@RequestMapping(value="/newpost")
 	public String newpost()
@@ -63,10 +94,30 @@ public class ImageSearchController {
 		return "profile";
 	}
 	@RequestMapping(value="/search")
-	public String search()
+	public ModelAndView search(@RequestParam(value ="searchTerm", required = false, defaultValue="") String searchTerm)
 	{
-		
-		return "search";
+		ModelAndView modelAndView = new ModelAndView();
+		List<PostDTO> posts = new ArrayList<PostDTO>();
+		try {						
+			posts= 
+					StreamSupport.stream(imageService.fetchAllPosts().spliterator(), false)
+					.collect(Collectors.toList());
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+			modelAndView.setViewName("error");
+		}
+		List<PostDTO> resultPosts = new ArrayList<PostDTO>();
+		for(PostDTO post: posts)
+		{
+			if( post.getpostName().contains(searchTerm))
+			{
+				resultPosts.add(post);
+			}
+		}
+		modelAndView.setViewName("search");
+		modelAndView.addObject("posts", resultPosts);
+		return modelAndView;
 	}
 
 }

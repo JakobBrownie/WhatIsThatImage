@@ -9,4 +9,6 @@ import com.imagesearch.imagesearch.dto.PostDTO;
 public interface PostRepository extends CrudRepository<PostDTO, Integer> {
 
 	List<PostDTO> findByUserId(int userId);
+	
+	List<PostDTO> findByPostId(int postId);
 }

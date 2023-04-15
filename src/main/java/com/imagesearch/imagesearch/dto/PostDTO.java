@@ -26,7 +26,7 @@ public class PostDTO {
 	@Column(name="date")
 	private LocalDate date;
 	
-	public int getpostId() {
+	public int getPostId() {
 		return postId;
 	}
 	public void setPostId(int postId) {
