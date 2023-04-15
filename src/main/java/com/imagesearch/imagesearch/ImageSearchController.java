@@ -36,14 +36,14 @@ public class ImageSearchController {
 
 	private Boolean islogin = false;
 	private int loginUserId = 0;
-	
+	//default nav
 	@RequestMapping("/home")
 	public String home()
 	{
 		
 		return "home";
 	}
-	
+	//backup navigation
 	@RequestMapping("/")
 	public String index() {
 		return "home";
@@ -123,6 +123,7 @@ public class ImageSearchController {
 		ModelAndView modelAndView = new ModelAndView();
 		List<PostDTO> posts = new ArrayList<PostDTO>();
 		List<CommentDTO> comments = new ArrayList<CommentDTO>();
+		//get all posts with id and comments related to the post
 		try {
 			posts = imageService.getPostById(postId);
 			comments = imageService.getAllCommentsByPostId(postId);
@@ -139,6 +140,8 @@ public class ImageSearchController {
 		
 		return modelAndView;
 	}
+	
+	//new post checks if user is logged in then if not forces log in
 	@RequestMapping(value="/newpost")
 	public String newpost()
 	{
@@ -150,6 +153,7 @@ public class ImageSearchController {
 		return returnString;
 	}
 	
+	//after create post screen, creates and saves new post
 	@RequestMapping(value="/afternewpost")
 	public String afternewpost(@RequestParam(value ="postname", required = true) String postname, @RequestParam(value ="imagelink", required = true) String imagelink)
 	{
@@ -159,6 +163,7 @@ public class ImageSearchController {
 	   post.setDate(LocalDate.now());
 	   post.setUserId(loginUserId);
 	   
+	   //get user to add user name to post
 	   UserDTO user = new UserDTO();
 		try {
 			user = imageService.getUserById(loginUserId).get(0);		
@@ -191,7 +196,7 @@ public class ImageSearchController {
 			modelAndView.setViewName("home");
 		}
 		
-		
+		//gets all posts by the user being shown
 		List<PostDTO> posts = new ArrayList<PostDTO>();
 		try {						
 			posts= imageService.getPostByUserId(userId);
@@ -216,6 +221,7 @@ public class ImageSearchController {
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		List<PostDTO> posts = new ArrayList<PostDTO>();
+		//get posts
 		try {						
 			posts= 
 					StreamSupport.stream(imageService.fetchAllPosts().spliterator(), false)

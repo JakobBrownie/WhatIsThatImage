@@ -27,11 +27,13 @@ public class ImageService implements IImageService {
 	@Autowired
 	ICommentDAO commentDAO;
 	
+	//calls save from userDAO
 	public boolean save(UserDTO userDTO) throws Exception
 	{
 		userDAO.save(userDTO);
 		return false;
 	}
+	//calls save from postDAO
 	@Override
 	public boolean savePost(PostDTO postDTO) throws Exception
 	{
@@ -39,90 +41,54 @@ public class ImageService implements IImageService {
 		return false;
 	}
 	
-	@Override
-	public UserDTO fetchUserById(int id)
-	{
-		UserDTO user = new UserDTO();
-		user.setUserId(124);
-		user.setUserName("test user name test");
-		return(user);
-	}
-	
+	//gets all users
 	@Override
 	public Iterable<UserDTO> fetchAllUsers() throws Exception
 	{
 		return userDAO.fetchAll();
 	}
 	
+	//gets all posts
 	@Override
 	public Iterable<PostDTO> fetchAllPosts() throws Exception
 	{
 		return postDAO.fetchAll();
 	}
 	
+	//gets all comments
 	@Override
 	public Iterable<CommentDTO> fetchAllComments() throws Exception
 	{
 		return commentDAO.fetchAll();
 	}
 	
-	
+	//get post by post id
 	@Override
 	public List<PostDTO> getPostById(int id) throws Exception
 	{
 		return postDAO.getPostById(id);
 	}
 	
-
+	//get post by user id
 	@Override
 	public List<PostDTO> getPostByUserId(int userId) throws Exception
 	{
 		return postDAO.getPostByUserId(userId);
 	}
 	
+	//get all comments related to a post
 	@Override
 	public List<CommentDTO> getAllCommentsByPostId(int id) throws Exception
 	{
 		return commentDAO.getAllCommentsByPostId(id);
 	}
 	
+	//get user by user id
 	@Override
 	public List<UserDTO> getUserById(int id) throws Exception
 	{
 		return userDAO.getUserById(id);
 	}
-	
-	@Override
-	public PostDTO fetchById(int id)
-	{
-		UserDTO user = new UserDTO();
-		user.setUserId(123);
-		user.setUserName("test user name");
-		PostDTO post = new PostDTO();
-		post.setPostId(id);
-		post.setPostName("Test name");
-		post.setPostContent("link to image");
-		post.setDate(LocalDate.now());
-		post.setUserId(1);
-		return(post);
-	}
-	
-	@Override
-	public List<PostDTO> fetchPostList(int id)
-	{
-		List<PostDTO> postList = new ArrayList<PostDTO>();
-		UserDTO user = new UserDTO();
-		user.setUserId(123);
-		user.setUserName("test user name");
-		PostDTO post = new PostDTO();
-		post.setPostId(id);
-		post.setPostName("Test name");
-		post.setPostContent("link to image");
-		post.setDate(LocalDate.now());
-		post.setUserId(1);
-		postList.add(post);
-		postList.add(post);
-		return(postList);
-	}
+
 
 }
