@@ -11,11 +11,17 @@
 view post page
 <p th:text="${post.getUserName}"/>
 <br/>
-<img src=${post.getContent} alt="post image" width="500" height="600">
+<img src=${post.getContent} alt="post image">
 <br/>
 <p th:text="${post.getDate}"/>
 <br/>
 
+<a>
+  <textarea class="form-control" id="textAreaExample" rows="2"
+      style="background: #fff;" placeholder="Create a Comment"></textarea>                
+    <button type="button" class="btn btn-secondary btn-sm">Post comment</button>           
+            </a>
+<br/>
 
 <div class="list-group" th:each="comment : ${comments}">
 	<a  class="list-group-item list-group-item-action">

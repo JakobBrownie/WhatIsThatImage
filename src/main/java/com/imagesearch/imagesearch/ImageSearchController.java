@@ -43,18 +43,12 @@ public class ImageSearchController {
 	}
 	
 	@RequestMapping(value="/login")
-	public String login(Model model)
+	public String login(Boolean login)
 	{
-		UserDTO user = new UserDTO();
-		user = imageService.fetchUserById(10);
-		
-		try {
-			Iterable<UserDTO> test = imageService.fetchAllUsers();
-			imageService.save(user);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
+		String returnString = "";
+		if(login = true)
+		{
+			profile(1);
 		}
 		return "login";
 	}
@@ -93,10 +87,31 @@ public class ImageSearchController {
 		return "newpost";
 	}
 	@RequestMapping(value="/profile")
-	public String profile()
+	public ModelAndView profile(@RequestParam("user_Id") int userId)
 	{
+		ModelAndView modelAndView = new ModelAndView();
+		UserDTO user = new UserDTO();
+		try {
+			imageService.getUserById(userId);
+			modelAndView.setViewName("profile");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			modelAndView.setViewName("home");
+		}
 		
-		return "profile";
+		
+		List<PostDTO> posts = new ArrayList<PostDTO>();
+		try {						
+			posts= imageService.getPostByUserId(userId);
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+			modelAndView.setViewName("error");
+		}	
+		modelAndView.addObject("posts", posts);			
+		modelAndView.addObject("user", user);		
+		return modelAndView;
 	}
 	@RequestMapping(value="/search")
 	public ModelAndView search(@RequestParam(value ="searchTerm", required = false, defaultValue="") String searchTerm)

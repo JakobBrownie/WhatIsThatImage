@@ -32,4 +32,10 @@ public class PostDAO implements IPostDAO {
 	{
 		return postRepository.findByPostId(id);
 	}
+	
+	@Override
+	public List<PostDTO> getPostByUserId(int id) throws Exception
+	{
+		return postRepository.findByUserId(id);
+	}
 }

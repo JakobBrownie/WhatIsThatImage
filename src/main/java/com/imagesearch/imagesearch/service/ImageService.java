@@ -67,10 +67,23 @@ public class ImageService implements IImageService {
 		return postDAO.getPostById(id);
 	}
 	
+
+	@Override
+	public List<PostDTO> getPostByUserId(int userId) throws Exception
+	{
+		return postDAO.getPostByUserId(userId);
+	}
+	
 	@Override
 	public List<CommentDTO> getAllCommentsByPostId(int id) throws Exception
 	{
 		return commentDAO.getAllCommentsByPostId(id);
+	}
+	
+	@Override
+	public List<UserDTO> getUserById(int id) throws Exception
+	{
+		return userDAO.getUserById(id);
 	}
 	
 	@Override

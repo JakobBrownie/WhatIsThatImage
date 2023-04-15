@@ -26,4 +26,8 @@ public interface IImageService {
 
 	List<CommentDTO> getAllCommentsByPostId(int id) throws Exception;
 
+	List<UserDTO> getUserById(int id) throws Exception;
+
+	List<PostDTO> getPostByUserId(int userId) throws Exception;
+
 }

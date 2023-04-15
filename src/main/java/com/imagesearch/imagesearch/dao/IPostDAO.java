@@ -12,4 +12,6 @@ public interface IPostDAO {
 
 	List<PostDTO> getPostById(int id) throws Exception;
 
+	List<PostDTO> getPostByUserId(int id) throws Exception;
+
 }
