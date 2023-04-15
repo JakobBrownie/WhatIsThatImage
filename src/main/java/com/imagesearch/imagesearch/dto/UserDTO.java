@@ -16,9 +16,17 @@ public class UserDTO {
 	private int userId;
 	@Column(name="user_name")
 	private String userName;
+	@Column(name="password")
+	private String Password;
 	
 	public int getUserId() {
 		return userId;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		Password = password;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;

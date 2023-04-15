@@ -51,9 +51,10 @@ public class ImageSearchController {
 	public String login()
 	{
 		String returnString = "home";
-		if(islogin = true)
+		if(islogin == true)
 		{
 			returnString = "redirect:/profile?user_Id=" + loginUserId;
+			
 		} else
 		{
 			returnString = "login";
@@ -66,11 +67,32 @@ public class ImageSearchController {
 		
 		return "signup";
 	}
-	@RequestMapping(value="/signup")
-	public String afterLogin()
+	@RequestMapping(value="/afterLogin")
+	public String afterLogin(@RequestParam(value ="username", required = true) String username, @RequestParam(value ="password", required = true) String password)
 	{
-		
-		return "signup";
+		String returnString = "login";
+		List<UserDTO> users = new ArrayList<UserDTO>();
+		try {
+		users= 
+				StreamSupport.stream(imageService.fetchAllUsers().spliterator(), false)
+				.collect(Collectors.toList());
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		for(UserDTO user: users)
+		{		
+			if (user.getUserName().equals(username) && user.getPassword().equals(password))
+			{
+				loginUserId= user.getUserId();
+				islogin = true;
+				return "redirect:/profile?user_Id=" + loginUserId;
+			} else
+			{
+				returnString = "redirect:/login?fail=True";
+			}
+		}
+		return returnString;
 	}
 	@RequestMapping(value="/post")
 	public ModelAndView post(@RequestParam("post_Id") int postId)
@@ -100,13 +122,15 @@ public class ImageSearchController {
 	   Object test = session.getAttribute("login");
 		return "newpost";
 	}
+	
+	//if not current user profile
 	@RequestMapping(value="/profile")
 	public ModelAndView profile(@RequestParam("user_Id") int userId)
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		UserDTO user = new UserDTO();
 		try {
-			imageService.getUserById(userId);
+			user = imageService.getUserById(userId).get(0);
 			modelAndView.setViewName("profile");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -126,6 +150,13 @@ public class ImageSearchController {
 		modelAndView.addObject("posts", posts);			
 		modelAndView.addObject("user", user);		
 		return modelAndView;
+	}
+	
+	@RequestMapping(value="/userprofile")
+	public String userprofile()
+	{
+			
+		return "redirect:/profile?user_Id=" + loginUserId;
 	}
 	@RequestMapping(value="/search")
 	public ModelAndView search(@RequestParam(value ="searchTerm", required = false, defaultValue="") String searchTerm)
